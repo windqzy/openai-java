@@ -10,8 +10,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ChatCompletionTest {
 
-    String token = System.getenv("OPENAI_TOKEN");
-    OpenAiService service = new OpenAiService(token);
+//    String token = System.getenv("OPENAI_TOKEN");
+    OpenAiService service = new OpenAiService("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");
 
     @Test
     void createChatCompletion() {
@@ -29,6 +29,7 @@ class ChatCompletionTest {
                 .build();
 
         List<ChatCompletionChoice> choices = service.createChatCompletion(chatCompletionRequest).getChoices();
+        System.out.println("choices = " + choices);
         assertEquals(5, choices.size());
     }
 

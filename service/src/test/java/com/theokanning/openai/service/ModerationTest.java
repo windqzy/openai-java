@@ -9,8 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ModerationTest {
 
-    String token = System.getenv("OPENAI_TOKEN");
-    com.theokanning.openai.service.OpenAiService service = new OpenAiService(token);
+    OpenAiService service = new OpenAiService("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");
 
     @Test
     void createModeration() {
@@ -20,6 +19,7 @@ public class ModerationTest {
                 .build();
 
         Moderation moderationScore = service.createModeration(moderationRequest).getResults().get(0);
+        System.out.println("moderationScore = " + moderationScore);
 
         assertTrue(moderationScore.isFlagged());
     }

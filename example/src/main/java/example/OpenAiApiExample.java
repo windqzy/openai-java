@@ -13,8 +13,7 @@ import java.util.List;
 
 class OpenAiApiExample {
     public static void main(String... args) {
-        String token = System.getenv("OPENAI_TOKEN");
-        OpenAiService service = new OpenAiService(token);
+        OpenAiService service = new OpenAiService("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");
 
         System.out.println("\nCreating completion...");
         CompletionRequest completionRequest = CompletionRequest.builder()
@@ -27,8 +26,12 @@ class OpenAiApiExample {
         service.createCompletion(completionRequest).getChoices().forEach(System.out::println);
 
         System.out.println("\nCreating Image...");
+//        CreateImageRequest request = CreateImageRequest.builder()
+//                .prompt("A cow break dancing with a turtle")
+//                .build();
+
         CreateImageRequest request = CreateImageRequest.builder()
-                .prompt("A cow breakdancing with a turtle")
+                .prompt("宇宙图片")
                 .build();
 
         System.out.println("\nImage is located at:");

@@ -12,8 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class EmbeddingTest {
 
-    String token = System.getenv("OPENAI_TOKEN");
-    com.theokanning.openai.service.OpenAiService service = new OpenAiService(token);
+    OpenAiService service = new OpenAiService("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");
 
     @Test
     void createEmbeddings() {
@@ -23,7 +22,7 @@ public class EmbeddingTest {
                 .build();
 
         List<Embedding> embeddings = service.createEmbeddings(embeddingRequest).getData();
-
+        System.out.println("embeddings = " + embeddings);
         assertFalse(embeddings.isEmpty());
         assertFalse(embeddings.get(0).getEmbedding().isEmpty());
     }

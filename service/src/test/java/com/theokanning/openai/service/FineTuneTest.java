@@ -12,17 +12,16 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class FineTuneTest {
-    static com.theokanning.openai.service.OpenAiService service;
+    static OpenAiService service;
     static String fileId;
     static String fineTuneId;
 
 
     @BeforeAll
    static void setup() throws Exception {
-        String token = System.getenv("OPENAI_TOKEN");
-        service = new OpenAiService(token);
+        service = new OpenAiService("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");
         fileId = service.uploadFile("fine-tune", "src/test/resources/fine-tuning-data.jsonl").getId();
-
+        System.out.println(fileId);
         // wait for file to be processed
         TimeUnit.SECONDS.sleep(10);
     }
@@ -42,6 +41,7 @@ public class FineTuneTest {
                 .build();
 
         FineTuneResult fineTune = service.createFineTune(request);
+        System.out.println("fineTune = " + fineTune);
         fineTuneId = fineTune.getId();
 
         assertEquals("pending", fineTune.getStatus());
@@ -51,6 +51,7 @@ public class FineTuneTest {
     @Order(2)
     void listFineTunes() {
         List<FineTuneResult> fineTunes = service.listFineTunes();
+
 
         assertTrue(fineTunes.stream().anyMatch(fineTune -> fineTune.getId().equals(fineTuneId)));
     }

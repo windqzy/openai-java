@@ -3,7 +3,7 @@ package com.theokanning.openai.service;
 import com.theokanning.openai.completion.CompletionChoice;
 import com.theokanning.openai.completion.CompletionChunk;
 import com.theokanning.openai.completion.CompletionRequest;
-import com.theokanning.openai.service.OpenAiService;
+import com.theokanning.openai.completion.LogProbResult;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -15,8 +15,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class CompletionTest {
 
-    String token = System.getenv("OPENAI_TOKEN");
-    OpenAiService service = new OpenAiService(token);
+    //    String token = System.getenv("OPENAI_TOKEN");
+//    String token = System.getenv("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");
+    OpenAiService service = new OpenAiService("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");
 
     @Test
     void createCompletion() {
@@ -32,6 +33,13 @@ public class CompletionTest {
                 .build();
 
         List<CompletionChoice> choices = service.createCompletion(completionRequest).getChoices();
+        for (CompletionChoice choice : choices) {
+            Integer index = choice.getIndex();
+            String finishReason = choice.getFinish_reason();
+            String text = choice.getText();
+            LogProbResult logprobs = choice.getLogprobs();
+            System.out.println("index = " + index + "     text = " + text);
+        }
         assertEquals(5, choices.size());
         assertNotNull(choices.get(0).getLogprobs());
     }

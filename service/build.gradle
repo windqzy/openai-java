@@ -10,6 +10,7 @@ dependencies {
     testImplementation(platform('org.junit:junit-bom:5.8.2'))
     testImplementation 'org.junit.jupiter:junit-jupiter'
     testImplementation 'com.squareup.retrofit2:retrofit-mock:2.9.0'
+    testImplementation 'org.jetbrains:annotations:23.0.0'
 }
 
 compileJava {

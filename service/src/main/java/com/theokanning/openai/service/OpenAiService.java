@@ -41,6 +41,8 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
 import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
 import java.time.Duration;
 import java.util.List;
 import java.util.Objects;
@@ -72,10 +74,19 @@ public class OpenAiService {
      * @param timeout http read timeout, Duration.ZERO means no timeout
      */
     public OpenAiService(final String token, final Duration timeout) {
-        ObjectMapper mapper = defaultObjectMapper();
-        OkHttpClient client = defaultClient(token, timeout);
-        Retrofit retrofit = defaultRetrofit(client, mapper);
+//        ObjectMapper mapper = defaultObjectMapper();
+//        OkHttpClient client = defaultClient(token, timeout);
+//        Retrofit retrofit = defaultRetrofit(client, mapper);
+//        this.api = retrofit.create(OpenAiApi.class);
 
+
+        ObjectMapper mapper = defaultObjectMapper();
+        Proxy proxy = new Proxy(Proxy.Type.SOCKS, new InetSocketAddress("127.0.0.1", 1086));
+        OkHttpClient client = defaultClient(token, timeout)
+                .newBuilder()
+                .proxy(proxy)
+                .build();
+        Retrofit retrofit = defaultRetrofit(client, mapper);
         this.api = retrofit.create(OpenAiApi.class);
         this.executorService = client.dispatcher().executorService();
     }
